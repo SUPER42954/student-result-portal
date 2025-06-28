@@ -1,39 +1,39 @@
-
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-<title>Student Result Portal</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Result Portal</title>
+  <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f8ff;
+      background: #e3f2fd;
+      padding: 30px;
       text-align: center;
-      padding: 40px;
     }
     .container {
       background: white;
-      width: 650px;
-      margin: auto;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 10px #aaa;
+      max-width: 750px;
+      margin: auto;
+      box-shadow: 0 0 15px #aaa;
     }
-    input {
+    input, select {
       padding: 10px;
-      width: 80%;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      width: 60%;
+      margin: 10px;
       border: 1px solid #999;
+      border-radius: 5px;
     }
     button {
       padding: 10px 20px;
-      background: #00695c;
+      margin: 10px;
+      background-color: #00695c;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin: 5px;
     }
     table {
       width: 100%;
@@ -46,208 +46,252 @@
       text-align: center;
     }
     th {
-      background: #e0e0e0;
+      background-color: #e0e0e0;
     }
     #resultSection {
-      background: white;
-      padding: 20px;
-      margin-top: 20px;
       display: none;
-    }
-    .details {
-      text-align: left;
-      margin-top: 20px;
     }
     .not-found {
       color: red;
-      margin-top: 20px;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-<div class="container">
-<img alt="School Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Graduation_cap_icon.svg/1024px-Graduation_cap_icon.svg.png" style="margin-bottom:10px;" width="80"/>
-<h2>SUPER EDUCATED CLASS, AZAMGARH - 223227</h2>
-<h4>Result Year: 2025–26</h4>
-<h2>Student Result Portal</h2>
-<input id="rollInput" placeholder="Enter Roll Number (e.g. 101)" type="text"/>
-<br/>
-<button onclick="showResult()">Check Result</button>
-<button onclick="downloadPDF()">Download PDF</button>
-<div id="resultSection">
-<div style="text-align:center; margin-bottom: 20px;">
-<img alt="School Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Graduation_cap_icon.svg/1024px-Graduation_cap_icon.svg.png" style="margin-bottom:10px;" width="80"/>
-<h1 style="margin: 5px 0; color:#004d40;">SUPER EDUCATED CLASS</h1>
-<h3 style="margin: 0; font-weight:normal;">Shekhpur Daud, Azamgarh - 223227</h3>
-<p style="margin: 5px 0; font-style: italic;">Learn Today, Lead Tomorrow</p>
-<p><strong>Result Year: 2025–26</strong></p>
-<hr style="border-top: 2px solid #00695c; width: 80%;"/>
-</div>
+  <div class="container">
+    <h2>Student Result Portal</h2>
+    <input type="text" id="rollInput" placeholder="Enter Roll Number">
+    <br>
+    <select id="yearInput">
+      <option value="">Select Year</option>
+      <option value="2021">2021–22</option>
+      <option value="2022">2022–23</option>
+      <option value="2023">2023–24</option>
+      <option value="2024">2024–25</option>
+      <option value="2025">2025–26</option>
+    </select>
+    <br>
+    <button onclick="showResult()">Check Result</button>
+    <button onclick="downloadPDF()">Download PDF</button>
 
+    <div id="resultSection">
+      <div style="text-align:center; margin-bottom: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Graduation_cap_icon.svg/1024px-Graduation_cap_icon.svg.png"
+          alt="School Logo" width="80" style="margin-bottom:10px;">
+        <h1>SUPER EDUCATED CLASS</h1>
+        <h3>Shekhpur Daud, Azamgarh - 223227</h3>
+        <p><i>Learn Today, Lead Tomorrow</i></p>
+        <p><strong>Result Year: <span id="displayYear"></span></strong></p>
+        <hr style="border-top: 2px solid #00695c; width: 80%;">
+      </div>
 
-<table>
-<thead>
-<tr>
-<th>Subject</th>
-<th>Marks (80)</th>
-<th>Practical (20)</th>
-<th>Total (100)</th>
-<th>Grade</th>
-</tr>
-</thead>
-<tbody id="marksTable"></tbody>
-<tfoot>
-<tr>
-<th colspan="3">Final Total</th>
-<th id="finalTotal"></th>
-<th id="overallGrade"></th>
-</tr>
-<tr>
-<th colspan="3">Percentage</th>
-<th id="percentage"></th>
-<th id="passFail"></th>
-</tr>
-</tfoot>
-</table>
+      <div style="text-align:left; margin-bottom: 10px;">
+        <p><strong>Name:</strong> <span id="studentName"></span></p>
+        <p><strong>Date of Birth:</strong> <span id="studentDOB"></span></p>
+        <p><strong>Class:</strong> <span id="studentClass"></span></p>
+        <p><strong>Father's Name:</strong> <span id="fatherName"></span></p>
+        <p><strong>Mother's Name:</strong> <span id="motherName"></span></p>
+      </div>
 
-<div style="text-align:center; font-size: 0.9em; margin-top: 40px; color: #444;">
-<p>This is a system-generated result. No signature required.</p>
-<p>Contact: +91-9876543210 | Email: supereducatedclass@gmail.com</p>
-</div>
-</div>
-<div class="not-found" id="notFound"></div>
-</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Marks (80)</th>
+            <th>Practical (20)</th>
+            <th>Total</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody id="marksTable"></tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3">Final Total</th>
+            <th id="totalMarks"></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th colspan="3">Percentage</th>
+            <th id="percentageMarks"></th>
+            <th id="resultStatus"></th>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div style="text-align:center; font-size: 0.9em; margin-top: 30px;">
+        <p>This is a system-generated result. No signature required.</p>
+        <p>Contact: +91-98XXXX3210 | Email: supereducatedclass@gmail.com</p>
+      </div>
+    </div>
+    <div class="not-found" id="notFound"></div>
+  </div>
+
+<script>
+const studentResults = {
+  "2021": {
+    "101": {
+      "name": "Mayank Prajapati", "dob": "15/03/2013", "class": " 1st",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [60,15], "Math": [65,14], "GK": [58,12], "Hindi": [66,13], "Art": [62,15] }
+    },
+    "102": {
+      "name": "Aaradhya Prajapati", "dob": "10/10/2018", "class": "LKG 1st",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [72,16], "Math": [70,15], "GK": [68,14], "Hindi": [75,17], "Art": [70,15] }
+    },
+    "103": {
+      "name": "Anshika Prajapati", "dob": "20/01/2015", "class": "LKG",
+      "father": "Musafir Prajapati", "mother": "Sangita Prajapati",
+      "marks": { "English": [65,15], "Math": [67,15], "GK": [60,12], "Hindi": [70,14], "Art": [66,15] }
+    }
+  },
+  "2022": {
+    "101": {
+      "name": "Mayank Prajapati", "dob": "15/03/2013", "class": "2nd",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [70,16], "Math": [72,15], "Science": [68,14], "Hindi": [74,15], "Art": [70,15] }
+    },
+    "102": {
+      "name": "Aaradhya Prajapati", "dob": "10/10/2018", "class": "LKG 2nd",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [78,18], "Math": [75,17], "GK": [72,15], "Hindi": [80,18], "Art": [76,16] }
+    },
+    "103": {
+      "name": "Anshika Prajapati", "dob": "20/01/2015", "class": "UKG II",
+      "father": "Musafir Prajapati", "mother": "Sangita Prajapati",
+      "marks": { "English": [70,15], "Math": [72,17], "GK": [68,13], "Hindi": [74,16], "Art": [72,15] }
+    }
+  },
+  "2023": {
+    "101": {
+      "name": "Mayank Prajapati", "dob": "15/03/2013", "class": "3rd",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [75,16], "Math": [76,18], "Science": [70,15], "Hindi": [78,17], "Social Studies": [72,16] }
+    },
+    "102": {
+      "name": "Aaradhya Prajapati", "dob": "10/10/2018", "class": "UKG 1st",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [80,18], "Math": [65,18], "GK": [76,17], "Hindi": [55,18], "Art": [77,17] }
+    },
+    "103": {
+      "name": "Anshika Prajapati", "dob": "20/01/2015", "class": "1st",
+      "father": "Musafir Prajapati", "mother": "Sangita Prajapati",
+      "marks": { "English": [76,17], "Math": [74,16], "Science": [72,15], "Hindi": [79,17], "Social Studies": [73,16] }
+    }
+  },
+  "2024": {
+    "101": {
+      "name": "Mayank Prajapati", "dob": "15/03/2013", "class": "4th",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [78,17], "Math": [79,18], "Science": [74,16], "Hindi": [80,18], "Social Studies": [75,17] }
+    },
+    "102": {
+      "name": "Aaradhya Prajapati", "dob": "10/10/2018", "class": "UKG 2nd",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [67,18], "Math": [78,19], "GK": [80,18], "Hindi": [68,18], "Art": [75,18] }
+    },
+    "103": {
+      "name": "Anshika Prajapati", "dob": "20/01/2015", "class": "2nd",
+      "father": "Musafir Prajapati", "mother": "Sangita Prajapati",
+      "marks": { "English": [80,17], "Math": [77,18], "Science": [78,16], "Hindi": [76,17], "Social Science": [80,17] }
+    }
+  },
+  "2025": {
+    "101": {
+      "name": "Mayank Prajapati", "dob": "15/03/2013", "class": "5th",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [68,16], "Math": [70,18], "Science": [64,15], "Hindi": [74,17], "Social Studies": [60,18] }
+    },
+    "102": {
+      "name": "Aaradhya Prajapati", "dob": "10/10/2018", "class": "1st",
+      "father": "Babulal Prajapati", "mother": "Sarita Prajapati",
+      "marks": { "English": [65,18], "Math": [56,19], "GK": [75,17], "Hindi": [72,18], "Art": [79,17] }
+    },
+    "103": {
+      "name": "Anshika Prajapati", "dob": "20/01/2015", "class": "3rd",
+      "father": "Musafir Prajapati", "mother": "Sangita Prajapati",
+      "marks": { "English": [75,17], "Math": [78,18], "Science": [70,16], "Hindi": [78,17], "Social Science": [76,18] }
+    }
+  }
+};
+
+function showResult() {
+  const roll = document.getElementById("rollInput").value.trim();
+  const year = document.getElementById("yearInput").value;
+  const section = document.getElementById("resultSection");
+  const notFound = document.getElementById("notFound");
+  const data = studentResults[year] ? studentResults[year][roll] : null;
+
+  if (data) {
+    section.style.display = "block";
+    notFound.innerText = "";
+    document.getElementById("displayYear").innerText = year + "–" + (parseInt(year)+1);
+    document.getElementById("studentName").innerText = data.name;
+    document.getElementById("studentDOB").innerText = data.dob;
+    document.getElementById("studentClass").innerText = data.class;
+    document.getElementById("fatherName").innerText = data.father;
+    document.getElementById("motherName").innerText = data.mother;
+
+    const marksTable = document.getElementById("marksTable");
+    marksTable.innerHTML = "";
+    let total = 0, subjects = 0, fail = false;
+
+    for (let subject in data.marks) {
+      const [marks, practical] = data.marks[subject];
+      const subjectTotal = marks + practical;
+      const grade = subjectTotal >= 90 ? "A+" : subjectTotal >= 80 ? "A" : subjectTotal >= 70 ? "B" : subjectTotal >= 60 ? "C" : subjectTotal >= 33 ? "D" : "F";
+      if (subjectTotal < 33) fail = true;
+
+      marksTable.innerHTML += `<tr><td>${subject}</td><td>${marks}</td><td>${practical}</td><td>${subjectTotal}</td><td>${grade}</td></tr>`;
+      total += subjectTotal;
+      subjects++;
+    }
+
+    const percent = (total / (subjects * 100)) * 100;
+    document.getElementById("totalMarks").innerText = total;
+    document.getElementById("percentageMarks").innerText = percent.toFixed(2) + "%";
+    const status = fail || percent < 33 ? "FAIL" : "PASS";
+    const resultStatus = document.getElementById("resultStatus");
+    resultStatus.innerText = status;
+    resultStatus.style.color = status === "PASS" ? "green" : "red";
+  } else {
+    section.style.display = "none";
+    notFound.innerText = "Result not found for Roll No: " + roll + " in " + year;
+  }
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-    const studentResults = {
-      "101": {
-        name: "Mayank Prajapati",
-        class: "5th",
-        father: "Babulal Prajapati",
-        mother: "Sarita Prajapati",
-        marks: {
-          English: { theory: 68, practical: 16 },
-          Math: { theory: 70, practical: 18 },
-          Science: { theory: 64, practical: 15 },
-          Hindi: { theory: 74, practical: 17 },
-          "Social Studies": { theory: 60, practical: 18 }
-        }
-      },
-      "102": {
-        name: "Aaradhya Prajapati",
-        class: "LKG",
-        father: "Babulal Prajapati",
-        mother: "Sarita Prajapati",
-        marks: {
-          English: { theory: 75, practical: 18 },
-          Math: { theory: 82, practical: 19 },
-          GK: { theory: 80, practical: 20 },
-          Hindi: { theory: 70, practical: 15 },
-          Art: { theory: 65, practical: 20 }
-        }
-      },
-      "103": {
-        name: "Anshika Prajapati",
-        class: "3rd",
-        father: "Musafir Prajapati",
-        mother: "Sangita Prajapati",
-        marks: {
-          English: { theory: 60, practical: 15 },
-          Math: { theory: 55, practical: 10 },
-          Science: { theory: 45, practical: 10 },
-          Hindi: { theory: 50, practical: 15 },
-          "Social Science": { theory: 40, practical: 10 }
-        }
-      }
-    };
-
-    function getGrade(total) {
-      if (total >= 90) return "A+";
-      else if (total >= 80) return "A";
-      else if (total >= 70) return "B";
-      else if (total >= 60) return "C";
-      else if (total >= 33) return "D";
-      else return "F";
-    }
-
-    function showResult() {
-      const roll = document.getElementById("rollInput").value.trim();
-      const data = studentResults[roll];
-      const resultSection = document.getElementById("resultSection");
-      const notFound = document.getElementById("notFound");
-      const studentName = document.getElementById("studentName");
-      const studentClass = document.getElementById("studentClass");
-      const fatherName = document.getElementById("fatherName");
-      const motherName = document.getElementById("motherName");
-      const marksTable = document.getElementById("marksTable");
-      const finalTotal = document.getElementById("finalTotal");
-      const overallGrade = document.getElementById("overallGrade");
-      const percentageField = document.getElementById("percentage");
-      const passFailField = document.getElementById("passFail");
-
-      if (data) {
-        resultSection.style.display = "block";
-        notFound.innerText = "";
-        studentName.innerText = data.name;
-        studentClass.innerText = data.class;
-        fatherName.innerText = data.father;
-        motherName.innerText = data.mother;
-
-        marksTable.innerHTML = "";
-        let grandTotal = 0;
-        let subjectCount = 0;
-        let isFail = false;
-
-        for (let subject in data.marks) {
-          const theory = data.marks[subject].theory;
-          const practical = data.marks[subject].practical;
-          const total = theory + practical;
-          const grade = getGrade(total);
-          grandTotal += total;
-          subjectCount++;
-          if (total < 33) isFail = true;
-
-          marksTable.innerHTML += `
-            <tr>
-              <td>${subject}</td>
-              <td>${theory}</td>
-              <td>${practical}</td>
-              <td>${total}</td>
-              <td>${grade}</td>
-            </tr>`;
-        }
-
-        const percentage = (grandTotal / (subjectCount * 100)) * 100;
-        finalTotal.innerText = grandTotal;
-        overallGrade.innerText = getGrade(percentage);
-        percentageField.innerText = percentage.toFixed(2) + "%";
-
-        const passStatus = !isFail && percentage >= 33 ? "PASS" : "FAIL";
-        passFailField.innerText = passStatus;
-        passFailField.style.color = passStatus === "PASS" ? "green" : "red";
-      } else {
-        resultSection.style.display = "none";
-        notFound.innerText = "Result not found for Roll No: " + roll;
-      }
-    }
-
-    function downloadPDF() {
-      const element = document.getElementById("resultSection");
-      if (element.style.display === "block") {
-        setTimeout(() => {
-          const opt = {
-            margin: 0.5,
-            filename: 'student-result.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, scrollY: 0 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-          };
-          html2pdf().from(element).set(opt).save();
-        }, 500);
-      } else {
-        alert("Please check result first by entering roll number.");
-      }
-    }
-  </script>
+function downloadPDF() {
+  const element = document.getElementById("resultSection");
+  if (element.style.display === "block") {
+    setTimeout(() => {
+      const opt = {
+        margin: 0.5,
+        filename: 'student-result.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().from(element).set(opt).save();
+    }, 500);
+  } else {
+    alert("Please check result first by entering roll number and year.");
+  }
+}
+</script>
 </body>
 </html>
+
+
+      
+    
+     
+
+
+   
+     
+       
+  
+ 
